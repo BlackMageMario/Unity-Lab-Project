@@ -8,6 +8,7 @@ public class CameraMove : MonoBehaviour {
     public float minZoom;
     public float speedOfZoom;
     public float speedOfRotation;
+	public float scrollSpeed;
 	// Use this for initialization
 	void Start () {
         transform.position = new Vector3(0, 0, 100);
@@ -22,17 +23,19 @@ public class CameraMove : MonoBehaviour {
         float distanceBetweenCameraAndMars = Vector3.Distance(this.transform.position, marsObject.transform.position);
         if (Input.anyKey)
         {
-            if (Input.GetKey(KeyCode.UpArrow))
+			float mouseScrollMovement = Input.GetAxis("Mouse ScrollWheel");
+			if (Input.GetKey(KeyCode.UpArrow))
             {
                 //close in zoom
                zMovement = speedOfZoom * Time.deltaTime;
-               if (distanceBetweenCameraAndMars > minZoom)
+               if (distanceBetweenCameraAndMars > minZoom )
                {
                    transform.position = Vector3.MoveTowards(transform.position, marsObject.transform.position, zMovement);
                }
                else
                {
                     transform.position = (this.transform.position - marsObject.transform.position).normalized * minZoom + marsObject.transform.position;
+					//normalise the difference between the two positions, then multiply them by our bound (in this case the minZoom) and add it to the marsObject position
                }
             }
             if (Input.GetKey(KeyCode.DownArrow))
@@ -44,9 +47,34 @@ public class CameraMove : MonoBehaviour {
                 }
                 else
                 {
-                    transform.position = (this.transform.position - marsObject.transform.position).normalized * maxZoom + marsObject.transform.position;
+                    
                 }
             }
+			if(mouseScrollMovement > 0)
+			{
+
+				zMovement = speedOfZoom * scrollSpeed * mouseScrollMovement * Time.deltaTime;
+				if (distanceBetweenCameraAndMars > minZoom)
+				{
+					transform.position = Vector3.MoveTowards(transform.position, marsObject.transform.position, zMovement);
+				}
+				else
+				{
+					transform.position = (this.transform.position - marsObject.transform.position).normalized * minZoom + marsObject.transform.position;
+				}
+			}
+			if(mouseScrollMovement < 0)
+			{
+				zMovement = speedOfZoom * scrollSpeed * mouseScrollMovement * Time.deltaTime;
+				if (distanceBetweenCameraAndMars < maxZoom)
+				{
+					transform.position = Vector3.MoveTowards(transform.position, marsObject.transform.position, zMovement);
+				}
+				else
+				{
+					transform.position = (this.transform.position - marsObject.transform.position).normalized * maxZoom + marsObject.transform.position;
+				}
+			}
             if (Input.GetKey(KeyCode.W))
             {
                 yMovement = speedOfRotation * Time.deltaTime;

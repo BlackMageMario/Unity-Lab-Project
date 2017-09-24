@@ -7,8 +7,23 @@ using UnityEngine;
 /// </summary>
 public class ObjectPool : MonoBehaviour {
     public GameObject objectToPool;
+	public int defaultNumber;
     private Stack<GameObject> inactiveObjects = new Stack<GameObject>();
     // Use this for initialization
+	void Start()
+	{
+		for(int i = 0; i < defaultNumber; i++)
+		{
+			GameObject spawnedObject = (GameObject)GameObject.Instantiate(objectToPool);
+			spawnedObject.transform.SetParent(this.gameObject.transform);
+			spawnedObject.SetActive(false);
+			PooledObject pooledObject = spawnedObject.AddComponent<PooledObject>();
+			pooledObject.pool = this;
+			inactiveObjects.Push(spawnedObject);
+			//not finding parent
+			
+		}
+	}
     public GameObject spawnObject()
     {
         GameObject spawnedObject;
@@ -19,14 +34,14 @@ public class ObjectPool : MonoBehaviour {
         }
         else
         {
-            //we need a new instance
+			//we need a new instance
+			Debug.Log("spawn");
             spawnedObject = (GameObject)GameObject.Instantiate(objectToPool);
-            PooledObject pooledObject = spawnedObject.AddComponent<PooledObject>();
+			spawnedObject.transform.SetParent(this.gameObject.transform);
+			PooledObject pooledObject = spawnedObject.AddComponent<PooledObject>();
             pooledObject.pool = this;
         }
-
-        spawnedObject.transform.SetParent(GameObject.Find("PoolManager").transform);
-        spawnedObject.SetActive(true);
+		spawnedObject.SetActive(true);
         return spawnedObject;
     }
 
@@ -44,18 +59,7 @@ public class ObjectPool : MonoBehaviour {
             Debug.LogWarning(toReturn.name + " was returned to a pool it wasn't spawned from.");
             Destroy(toReturn);
         }
-
-
     }
-
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }
 
 public class PooledObject : MonoBehaviour

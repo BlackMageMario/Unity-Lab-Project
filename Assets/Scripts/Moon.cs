@@ -14,7 +14,7 @@ public class Moon : MonoBehaviour {
     {
 		int rotationDirection = rotateSpinRight ? 1 : -1;
 		rotateAroundDirection = rotateAroundMarsRight ? 1 : -1;
-        GetComponent<Rigidbody>().AddTorque(0, rotationDirection*rotationSpeed, 0);
+        GetComponent<Rigidbody>().AddTorque(0, rotationDirection*rotationSpeed, 0, ForceMode.Acceleration);
     }
 	// Update is called once per frame
 	void Update () {
