@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.16265199, g: 0.12786993, b: 0.06690322, a: 1}
+  m_IndirectSpecularColor: {r: 0.16200775, g: 0.12793219, b: 0.066773236, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -505,7 +505,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   marsObject: {fileID: 843336569}
-  rotationSpeed: 4
+  rotationSpeed: 20
   rotateAroundSpeed: 7
   rotateSpinRight: 0
   rotateAroundMarsRight: 1
@@ -611,7 +611,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   marsObject: {fileID: 843336569}
-  rotationSpeed: 10
+  rotationSpeed: 30
   rotateAroundSpeed: 20
   rotateSpinRight: 1
   rotateAroundMarsRight: 0

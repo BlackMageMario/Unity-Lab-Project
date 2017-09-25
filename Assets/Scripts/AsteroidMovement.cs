@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class AsteroidMovement : MonoBehaviour {
-	public float forceAmount;
+    public GameObject asteroidExplosion;
+    public float forceAmount;
 	[Range(-400, -1)]public float minXPos, minZPos;
 	[Range(1, 400)]public float maxXpos, maxZPos;
 	private Camera mainCamera;
@@ -48,6 +49,15 @@ public class AsteroidMovement : MonoBehaviour {
 	void OnTriggerEnter(Collider col)
 	{
 		Debug.Log("Trigger entered: " + col);
+        //we can't get the collision normal from a collider
+        //but what we can do is instead normalise the the difference between the asteroid's position
+        //and the target it hits. Thene we add this to the asteroid's position
+        //Finally, we make the asteroid look at this position
+        //Essentially: we make the asteroid look at a point in a straight line after the point of contact
+        //make the explosion face the direction we want it to go off in
+        Vector3 rotation = (transform.position - col.transform.position).normalized;
+        GameObject explosion = Instantiate(asteroidExplosion, transform.position, this.transform.rotation);
+        explosion.transform.LookAt(transform.position + rotation);
 		this.transform.GetComponent<PooledObject>().pool.ReturnObject(this.gameObject);
 	}
 

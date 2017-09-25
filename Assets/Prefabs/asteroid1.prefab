@@ -127,6 +127,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30bce41d07c8866439cca6e14a37c5f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  asteroidExplosion: {fileID: 1612049900142086, guid: 966e71611d067a246bef715ef2258898,
+    type: 2}
   forceAmount: 900
   minXPos: -146
   minZPos: -150
